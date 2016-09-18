@@ -12,6 +12,18 @@ def get_dir(directory):
         makedirs(directory)
     return directory
 
+# CELL_SIZE = 256
+# NUM_LAYERS = 2
+#
+# BATCH_SIZE = 50
+# SEQ_LEN = 5
+#
+# MODEL_SAVE_FREQ =  1000
+#
+# L_RATE = 0.002
+
+
+
 CELL_SIZE = 256
 NUM_LAYERS = 2
 
@@ -20,7 +32,7 @@ SEQ_LEN = 5
 
 MODEL_SAVE_FREQ =  1000
 
-L_RATE = 0.002
+L_RATE = 0.0001
 
 
 # Data

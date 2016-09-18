@@ -96,7 +96,7 @@ def main():
         if opt in ('-l', '--load_path'):
             load_path = arg
         if opt in ('-m', '--model_name'):
-            c.SAVE_NAME = arg
+            c.set_save_name(arg)
         if opt in ('-a', '--artist_name'):
             artist_name = arg
         if opt in ('-t', '--test'):

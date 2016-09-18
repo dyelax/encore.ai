@@ -12,4 +12,4 @@ def unkify(string, vocab):
         if word not in vocab:
             words[i] = '*UNK*'
 
-    return ''.join(words)
+    return ' '.join(words)

@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.python.ops import rnn_cell, seq2seq
 import numpy as np
 
+from utils import unkify
 
 # noinspection PyAttributeOutsideInit
 class LSTMModel:
@@ -152,9 +153,14 @@ class LSTMModel:
         """
         state = self.sess.run(self.cell.zero_state(1, tf.float32))
 
+        # if no prime supplied, get a random word. Otherwise, translate all words in prime that
+        # aren't in dictionary to '*UNK*'
         if prime is None:
             prime = np.random.choice(self.vocab)
+        else:
+            prime = unkify(prime, self.vocab)
 
+        # prime the model state
         for word in prime.split():
             print word
             input_i = np.array([[self.vocab.index(word)]])
@@ -162,8 +168,9 @@ class LSTMModel:
             feed_dict = {self.inputs: input_i, self.initial_state: state}
             state = self.sess.run(self.final_state, feed_dict=feed_dict)
 
+        # generate the sequence
         gen_seq = prime
-        word = prime
+        word = prime.split()[-1]
         for i in xrange(num_out):
             # generate word probabilities
             input_i = np.array([[self.vocab[word]]])
@@ -171,16 +178,15 @@ class LSTMModel:
             probs, state = self.sess.run(self.final_state, feed_dict=feed_dict)
             probs = probs[0]
 
-            # select index of next word
+            # select index of new word
             if sample:
                 gen_word_i = np.random.choice(np.arange(len(probs)), p=probs)
             else:
                 gen_word_i = np.argmax(probs)
 
+            # append new word to the generated sequence
             gen_word = self.vocab[gen_word_i]
             gen_seq += ' ' + gen_word
             word = gen_word
 
         return gen_seq
-
-# TODO: UNK tokens in data

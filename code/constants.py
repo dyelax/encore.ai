@@ -1,4 +1,4 @@
-from os.path import join
+import os
 
 def get_dir(directory):
     """
@@ -29,5 +29,5 @@ L_RATE = 0.002
 SAVE_DIR = get_dir('../save/')
 SAVE_NAME = 'default/'
 
-SAMPLE_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'samples'), SAVE_NAME))
-MODEL_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'models'), SAVE_NAME))
+SAMPLE_SAVE_DIR = get_dir(os.path.join(os.path.join(SAVE_DIR, 'samples'), SAVE_NAME))
+MODEL_SAVE_DIR = get_dir(os.path.join(os.path.join(SAVE_DIR, 'models'), SAVE_NAME))

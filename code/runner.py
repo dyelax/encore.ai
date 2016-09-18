@@ -1,5 +1,4 @@
 import tensorflow as tf
-import numpy as np
 
 import constants as c
 from LSTMModel import LSTMModel
@@ -8,7 +7,7 @@ from data_reader import DataReader
 
 
 class LyricGenRunner:
-    def __init__(self, model_load_path, artist_dir):
+    def __init__(self, model_load_path, artist_name):
         """
         Initializes the Lyric Generation Runner.
 
@@ -23,7 +22,7 @@ class LyricGenRunner:
         # Data
         ##
         print 'Process data...'
-        self.data_reader = DataReader(artist_dir)
+        self.data_reader = DataReader(artist_name)
         self.vocab = self.data_reader.get_vocab()
 
         print 'Init model...'
@@ -48,13 +47,13 @@ class LyricGenRunner:
         Runs a training loop on the model.
         """
         while True:
-            inputs, targets = self.data_reader.get_train_batch()
+            inputs, targets = self.data_reader.get_train_batch(c.BATCH_SIZE, c.SEQ_LEN)
             print 'Training model...'
 
             feed_dict = {self.model.inputs: inputs, self.model.targets: targets}
-            global_step, loss, _ = self.sess.run(self.model.global_step,
-                                                 self.model.loss,
-                                                 self.model.optimizer,
+            global_step, loss, _ = self.sess.run([self.model.global_step,
+                                                  self.model.loss,
+                                                  self.model.optimizer],
                                                  feed_dict=feed_dict)
 
             if global_step % c.SAMPLE_SAVE_FREQ == 0:
@@ -65,7 +64,15 @@ class LyricGenRunner:
                 self.saver.save(self.sess, c.MODEL_SAVE_DIR, global_step=global_step)
 
 def main():
+    load_path = None
+    artist_name = 'kanye_west'
+    test_only = False
 
+    # try:
+        # opts, _ = getopt.getopt(sys.argv[1:], 'l:n:T', ['load_path=', 'name=', 'testOnly']
+
+    runner = LyricGenRunner(load_path, artist_name)
+    runner.train()
 
 if __name__ == '__main__':
     main()

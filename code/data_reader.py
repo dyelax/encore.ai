@@ -1,6 +1,5 @@
 import numpy as np
 import os
-from collections import Counter
 import random
 
 class DataReader:
@@ -11,13 +10,13 @@ class DataReader:
     self.vocab_lookup = {}
 
   def get_path(self):
-    return '../data_wrangling/artists/' + self.artist + '/'
+    return os.path.join('../data/artists/', self.artist)
 
   # Load all song lyrics into a 2D array
   def load_lyrics(self):
     path = self.get_path()
     for fn in os.listdir(path):
-      with open(path + fn, 'r') as song:
+      with open(os.path.join(path, fn), 'r') as song:
         self.lyrics.append(song.read().split(' '))
 
   # An array of unique words (work tokens) with the bottom THRESHOLD_COUNT least frequent words converted to UNK

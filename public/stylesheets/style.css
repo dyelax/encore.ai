@@ -48,7 +48,7 @@ body{
 .left{
 	position: absolute;
   top: 120px;
-  left: 25px;
+  left: 0;
   z-index: 1;
   padding: 0;
 	border: none;
@@ -67,6 +67,7 @@ body{
   background: -webkit-linear-gradient(top,  #673ab7 0%,#8065b2 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom,  #673ab7 0%,#8065b2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#673ab7', endColorstr='#8065b2',GradientType=0 ); /* IE6-9 */
+   box-shadow: 0px 3px 10px #999;
 }
 
 button:focus {
@@ -77,7 +78,7 @@ button:focus {
 	position: absolute;
     float: right;
     top: 120px;
-    right: 25px;
+    right: 0;
     z-index: 1;
     padding: 0;
 	border: none;
@@ -117,6 +118,14 @@ body .top-section {
   display: block;
 }
 
+.artists {
+  width: 80%;
+  padding-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: hidden;
+}
+
 .thumb img {
   width: 250px;
   height: 250px;
@@ -125,18 +134,20 @@ body .top-section {
 .thumb {
   position: relative;
   width: 250px;
-  height: 250px;
+  height: 375px;
 }
-
 
 .thumb a {
   position: absolute;
   top: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 110%;
+  height: 110%;
+  left: -5%; right: -5%; top: -5%; bottom: -5%;
   text-align: center;
   text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  z-index: 1;
 }
 
 .thumb a .play, .thumb a .overlay {
@@ -144,6 +155,7 @@ body .top-section {
 }
 
 .thumb a:hover .play, .thumb a:hover .overlay {
+  z-index: 2;
   display: block; transition: opacity .25s ease-in-out;-moz-transition: opacity .25s ease-in-out;-webkit-transition: opacity .25s ease-in-out;
 }
 

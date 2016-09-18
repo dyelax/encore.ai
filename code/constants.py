@@ -1,4 +1,5 @@
-import os
+from os import makedirs
+from os.path import join, exists
 
 def get_dir(directory):
     """
@@ -7,8 +8,8 @@ def get_dir(directory):
     @param directory: The path to the directory.
     @return: The path to the directory.
     """
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+    if not exists(directory):
+        makedirs(directory)
     return directory
 
 CELL_SIZE = 256
@@ -17,8 +18,7 @@ NUM_LAYERS = 2
 BATCH_SIZE = 50
 SEQ_LEN = 25
 
-SAMPLE_SAVE_FREQ = 100
-MODEL_SAVE_FREQ =  1000
+MODEL_SAVE_FREQ =  100
 
 L_RATE = 0.002
 
@@ -29,5 +29,5 @@ L_RATE = 0.002
 SAVE_DIR = get_dir('../save/')
 SAVE_NAME = 'default/'
 
-SAMPLE_SAVE_DIR = get_dir(os.path.join(os.path.join(SAVE_DIR, 'samples'), SAVE_NAME))
-MODEL_SAVE_DIR = get_dir(os.path.join(os.path.join(SAVE_DIR, 'models'), SAVE_NAME))
+SAMPLE_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'samples'), SAVE_NAME))
+MODEL_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'models'), SAVE_NAME))

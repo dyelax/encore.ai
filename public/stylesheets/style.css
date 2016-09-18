@@ -26,6 +26,15 @@ body{
 	background-image: url("../images/background.png");
 	color: white !important;
 	font-family: circularBold;
+	overflow: visible !important;
+}
+
+.slick-list{
+	overflow: visible !important;
+}
+
+.thumb {
+    margin-left: 7em !important;
 }
 
 .navbar-brand{

@@ -24,15 +24,15 @@ def get_dir(directory):
 
 
 
-CELL_SIZE = 256
-NUM_LAYERS = 2
+CELL_SIZE = 1024
+NUM_LAYERS = 4
 
 BATCH_SIZE = 50
 SEQ_LEN = 5
 
 MODEL_SAVE_FREQ =  1000
 
-L_RATE = 0.0001
+L_RATE = 0.002
 
 
 # Data

@@ -1,5 +1,9 @@
 import numpy as np
 import os
+<<<<<<< HEAD
+=======
+from collections import Counter
+>>>>>>> 6a2a55a5424ba1108a909d9c2346bf93243dc746
 import random
 
 class DataReader:
@@ -33,7 +37,7 @@ class DataReader:
     self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
     self.lyric_indices = [map(lambda x: self.vocab_lookup[x], x) for x in self.lyrics]
 
-    return np.array(tokens)
+    return list(tokens)
 
 
   def get_train_batch(self, batch_size, seq_len):

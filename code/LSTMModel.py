@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.python.ops import rnn_cell, seq2seq
 import numpy as np
 
+import constants as c
 from utils import unkify
 
 # noinspection PyAttributeOutsideInit
@@ -49,7 +50,7 @@ class LSTMModel:
 
         # inputs and targets are 2D tensors of shape
         self.inputs = tf.placeholder(tf.int32, [self.batch_size, self.seq_len])
-        self.target = tf.placeholder(tf.int32, [self.batch_size, self.seq_len])
+        self.targets = tf.placeholder(tf.int32, [self.batch_size, self.seq_len])
         self.initial_state = lstm_cell.zero_state(self.batch_size, tf.float32)
 
         ##
@@ -138,7 +139,7 @@ class LSTMModel:
         self.loss = tf.reduce_sum(total_loss) / self.batch_size / self.seq_len
 
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
-        self.optimizer = tf.train.AdamOptimizer()
+        self.optimizer = tf.train.AdamOptimizer(learning_rate=c.L_RATE)
         self.train_op = self.optimizer.minimize(self.loss, global_step=self.global_step)
 
     def generate(self, num_out=200, prime=None, sample=False):

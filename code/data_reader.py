@@ -8,7 +8,7 @@ class DataReader:
     self.lyrics = []
 
   def get_path(self):
-    return 'artists/' + self.artist + '/'
+    return '../data/artists/' + self.artist + '/'
 
   # Load all song lyrics into a 2D array
   def load_lyrics(self):
@@ -27,9 +27,8 @@ class DataReader:
     # Collapses the 2D array to a 1D array of words
     all_words = reduce(lambda a,b: a + b, self.lyrics)
 
-    c = Counter(all_words)
-    least_common_words = c.most_common()[:-20]
-    print least_common_words
+    tokens = set(all_words)
+    return np.array(tokens)
 
 
   def get_train_batch(batch_size, seq_size):

@@ -3,6 +3,7 @@ import urllib2
 import os
 from random import random
 import time
+import sys
 
 BASE_URL = 'http://www.azlyrics.com/'
 
@@ -36,4 +37,5 @@ def download_all_lyrics(artist):
       download_lyrics(artist, url)
 
 
-download_all_lyrics('taylor_swift')
+artist = sys.argv[1]
+download_all_lyrics(artist)

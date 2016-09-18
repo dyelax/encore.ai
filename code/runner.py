@@ -102,7 +102,7 @@ def main():
         if opt in ('-t', '--test'):
             test = True
 
-    runner = LyricGenRunner(load_path, artist_name, test)
+    LyricGenRunner(load_path, artist_name, test)
 
 
 if __name__ == '__main__':

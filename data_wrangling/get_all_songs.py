@@ -36,6 +36,5 @@ with open('hand_picked.txt', 'r') as f:
         print url
         download_songs(url)
         w.write(url + '\n')
-      break
 
 print 'Complete'

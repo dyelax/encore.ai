@@ -74,7 +74,7 @@ $( ".slick-arrow:nth-of-type(2)").addClass("right");
         </ul>
         <form class="navbar-form navbar-right">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="kanye" style="color: black;">        </div>
+            <input type="text" class="form-control" placeholder="Search Artists" style="color: black;">        </div>
           <a type="submit" class="btn">Search</a>
         </form>
         <ul class="nav navbar-nav navbar-right">
@@ -85,7 +85,7 @@ $( ".slick-arrow:nth-of-type(2)").addClass("right");
     <div class="row autoplay artists">
         <div class="">
           <div class="thumb">
-              <a href="#">
+              <a data-artist="tupac">
                 <span class="play">GO</span>
                 <div class="overlay"></div>
               </a>
@@ -96,7 +96,7 @@ $( ".slick-arrow:nth-of-type(2)").addClass("right");
         </div>
         <div class="">
           <div class="thumb">
-              <a href="#">
+              <a data-artist="the_beatles">
                 <span class="play">GO</span>
                 <div class="overlay"></div>
               </a>
@@ -107,18 +107,18 @@ $( ".slick-arrow:nth-of-type(2)").addClass("right");
         </div>
         <div class="">
           <div class="thumb">
-              <a href="#">
+              <a data-artist="kanye_west">
                 <span class="play">GO</span>
                 <div class="overlay"></div>
               </a>
               <img src="images/kanye.png">
               <h2>Kanye West</h2>
-              <p>we know you can never get enough of the greatest</p>
+              <p>Peek into the mind of a Creative Genius</p>
           </div>
         </div>
         <div class="">
           <div class="thumb">
-              <a href="#" data-artist="taylor_swift">
+              <a data-artist="taylor_swift">
                 <span class="play">GO</span>
                 <div class="overlay"></div>
               </a>
@@ -129,39 +129,32 @@ $( ".slick-arrow:nth-of-type(2)").addClass("right");
         </div>
         <div class="">
           <div class="thumb">
-              <a href="#">
+              <a data-artist="drake">
                 <span class="play">GO</span>
                 <div class="overlay"></div>
               </a>
-              <img src="images/backstreet.png">
-              <h2>Backstreet Boys</h2>
-              <p>the boys are back, better and badder than ever.</p>
+              <img src="images/drake.png">
+              <h2>Drake</h2>
+              <p>TODO</p>
           </div>
         </div>
         <div class="">
         <div class="thumb">
-          <a href="#">
+          <a>
             <span class="play">GO</span>
             <div class="overlay"></div>
           </a>
-          <img src="images/backstreet.png">
-          <h2>Backstreet Boys</h2>
-          <p>the boys are back, better and badder than ever.</p>
+          <img src="images/other_artist.png">
+          <h2>Other Artists</h2>
+          <p>More Artists Coming Soon!</p>
         </div>
         </div>
        </div>
     </div>
 </div>
-  <div class="row">
-    <div id="particles-js"></div>
-
-    <!-- stats - count particles -->
-    <div class="count-particles">
-      <span class="js-count-particles">--</span> particles
-    </div>
-
-    <div class="subtitle black"> Training... </div>
-    <div class="lyrics-container"></div>
+  <div class="row lyrics">
+    <div class="subtitle"> Training... </div>
+    <div class="container"></div>
   </div>
   </body>
 </html>

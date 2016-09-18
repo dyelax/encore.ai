@@ -112,10 +112,35 @@ body .top-section {
     width: 100%;
 }
 
+.lyrics {
+  color: #333;
+  min-height: 800px;
+}
+
+.lyrics .subtitle {
+  font-size: 5em;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-transform: capitalize;
+  display: none;
+}
+
+.lyrics .container {
+  width: 60%;
+  font-size: 14pt;
+}
+
 .thumb {
   margin-left: auto;
   margin-right: auto;
   display: block;
+  overflow-y: hidden;
+}
+
+.thumb p, .thumb h2 {
+  margin: 10px;
+  margin-top: 20px;
 }
 
 .artists {
@@ -135,6 +160,7 @@ body .top-section {
   position: relative;
   width: 250px;
   height: 375px;
+  scroll-behavior: disabled;
 }
 
 .thumb a {

@@ -18,7 +18,10 @@ h2, p{
 h2{
 	font-size: 21px;
 }
-
+a{
+	color: white !important;
+	font-size: 1.5em !important;
+}
 body{
 	background-image: url("../images/background.png");
 	color: white !important;
@@ -28,6 +31,12 @@ body{
 .navbar-brand{
 	color: white !important;
 	font-size: 2em;
+	width: 100%
+}
+
+.icon{
+	width: 45%;
+    margin-top: -3px;
 }
 
 .transparent{

@@ -24,15 +24,21 @@ h2{
 	font-size: 21px;
 }
 
+.title {
+  font-size: 6em;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 a{
 	color: white !important;
 	font-size: 1.5em !important;
 }
+
 body{
-	background-image: url("../images/background.png");
 	color: white !important;
 	font-family: circularBold;
-	overflow: visible !important;
 }
 
 .slick-list{
@@ -41,10 +47,10 @@ body{
 
 .left{
 	position: absolute;
-    top: 42%;
-    left: 1%;
-    z-index: 1;
-    padding: 0;
+  top: 120px;
+  left: 25px;
+  z-index: 1;
+  padding: 0;
 	border: none;
 	background: none;
 }
@@ -53,12 +59,25 @@ body{
   outline: none !important;
 }
 
+.top-section {
+  height: 700px;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#673ab7+0,8065b2+100 */
+  background: #673ab7; /* Old browsers */
+  background: -moz-linear-gradient(top,  #673ab7 0%, #8065b2 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #673ab7 0%,#8065b2 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #673ab7 0%,#8065b2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#673ab7', endColorstr='#8065b2',GradientType=0 ); /* IE6-9 */
+}
+
+button:focus {
+  outline: none !important;
+}
 
 .right{
 	position: absolute;
     float: right;
-    left: 97%;
-    top: 38%;
+    top: 120px;
+    right: 25px;
     z-index: 1;
     padding: 0;
 	border: none;
@@ -66,7 +85,7 @@ body{
 }
 
 .thumb {
-    margin-left: 7em !important;
+  margin-left: 7em !important;
 }
 
 .navbar-brand{
@@ -77,7 +96,7 @@ body{
 
 .icon{
 	width: 45%;
-    margin-top: -3px;
+  margin-top: -3px;
 }
 
 .transparent{
@@ -89,20 +108,34 @@ body{
     background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
     background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
 }
-.thumb {position: relative;width: 186px;height: 208px;}
-.thumb img {
-  text-align: center;
-}
-.thumb a {
-    position: absolute;
-    top: 0;
-    display: block;
-    width: 107%;
-    height: 100%;
-    text-align: center;
-    text-decoration: none;
+
+body .top-section {
+    position: relative;
+    height:
+    width: 100%;
 }
 
+.thumb img {
+  width: 250px;
+  height: 250px;
+}
+
+.thumb {
+  position: relative;
+  width: 250px;
+  height: 250px;
+}
+
+
+.thumb a {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+}
 
 .thumb a .play, .thumb a .overlay {
   opacity: 0;
@@ -111,9 +144,11 @@ body{
 .thumb a:hover .play, .thumb a:hover .overlay {
   display: block; transition: opacity .25s ease-in-out;-moz-transition: opacity .25s ease-in-out;-webkit-transition: opacity .25s ease-in-out;
 }
+
 .thumb a:hover .play {
   position: relative; font-size: 64px; color: #ffffff; margin-top: 60px; z-index: 1000; opacity: 1;
 }
+
 .thumb a:hover .overlay {
   position: absolute; top: 0; width: 100%; height: 100%; background-color: #000000; opacity: .7;
 }

@@ -33,6 +33,9 @@ class DataReader:
     self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
     self.lyric_indices = [map(lambda x: self.vocab_lookup[x], x) for x in self.lyrics]
 
+    print self.lyric_indices
+    print list(tokens)
+
     return list(tokens)
 
 

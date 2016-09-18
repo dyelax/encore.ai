@@ -4,6 +4,7 @@ import numpy as np
 import constants as c
 from LSTMModel import LSTMModel
 from utils import save_sample
+from data_reader import DataReader
 
 
 class LyricGenRunner:

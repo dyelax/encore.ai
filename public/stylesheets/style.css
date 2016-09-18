@@ -84,10 +84,6 @@ button:focus {
 	background: none;
 }
 
-.thumb {
-  margin-left: 7em !important;
-}
-
 .navbar-brand{
 	color: white !important;
 	font-size: 2em;
@@ -113,6 +109,12 @@ body .top-section {
     position: relative;
     height:
     width: 100%;
+}
+
+.thumb {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .thumb img {

@@ -37,6 +37,14 @@ $(document).ready(function(){
     autoplaySpeed: 500,
     arrows: true
   });
+$( ".slick-arrow:first-of-type").addClass( "left" );
+
+$(".left").val(function(i, v) { //index, current value
+  return v.replace("P","Custom Text");
+});
+
+$( ".slick-arrow:nth-of-type(2)").addClass("right");
+
 });
 
 </script>

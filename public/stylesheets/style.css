@@ -33,6 +33,28 @@ body{
 	overflow: visible !important;
 }
 
+.left{
+	position: absolute;
+    top: 42%;
+    z-index: 1;
+    padding: 0;
+	border: none;
+	background: none;
+}
+
+
+.right{
+	position: absolute;
+    float: right;
+    left: 97%;
+    top: 38%;
+    z-index: 1;
+    padding: 0;
+	border: none;
+	background: none;
+}
+
+
 .thumb {
     margin-left: 7em !important;
 }

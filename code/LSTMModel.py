@@ -9,7 +9,7 @@ from utils import unkify
 
 # noinspection PyAttributeOutsideInit
 class LSTMModel:
-    def __init__(self, sess, vocab, batch_size, seq_len, cell_size, num_layers):
+    def __init__(self, sess, vocab, batch_size, seq_len, cell_size, num_layers, test=False):
         """
         Initializes an LSTM Model.
 
@@ -30,12 +30,15 @@ class LSTMModel:
         self.cell_size = cell_size
         self.num_layers = num_layers
 
-        self.build_graph()
+        self.build_graph(test)
 
-    def build_graph(self):
+    def build_graph(self, test):
         """
         Builds an LSTM graph in TensorFlow.
         """
+        if test:
+            self.batch_size = 1
+            self.seq_len = 1
 
         ##
         # LSTM Cells
@@ -51,7 +54,7 @@ class LSTMModel:
         # inputs and targets are 2D tensors of shape
         self.inputs = tf.placeholder(tf.int32, [self.batch_size, self.seq_len])
         self.targets = tf.placeholder(tf.int32, [self.batch_size, self.seq_len])
-        self.initial_state = lstm_cell.zero_state(self.batch_size, tf.float32)
+        self.initial_state = self.cell.zero_state(self.batch_size, tf.float32)
 
         ##
         # Variables
@@ -67,7 +70,9 @@ class LSTMModel:
                 # The split splits this tensor into a seq_len long list of 3D tensors of shape
                 # [batch_size, 1, rnn_size]. The squeeze removes the 1 dimension from the 1st axis
                 # of each tensor
-                inputs_split = tf.squeeze(tf.split(1, self.seq_len, input_embeddings), 1)
+                inputs_split = tf.split(1, self.seq_len, input_embeddings)
+                inputs_split = [tf.squeeze(input_, [1]) for input_ in inputs_split]
+
 
                 # inputs_split looks like this:
                 # [
@@ -92,7 +97,7 @@ class LSTMModel:
         lstm_outputs_split, self.final_state = seq2seq.rnn_decoder(inputs_split,
                                                                    self.initial_state,
                                                                    self.cell,
-                                                                   loop_function=loop,
+                                                                   loop_function=loop if test else None,
                                                                    scope='lstm_vars')
         lstm_outputs = tf.reshape(tf.concat(1, lstm_outputs_split), [-1, self.cell_size])
 
@@ -139,8 +144,11 @@ class LSTMModel:
         self.loss = tf.reduce_sum(total_loss) / self.batch_size / self.seq_len
 
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
-        self.optimizer = tf.train.AdamOptimizer(learning_rate=c.L_RATE)
-        self.train_op = self.optimizer.minimize(self.loss, global_step=self.global_step)
+        self.optimizer = tf.train.AdamOptimizer(learning_rate=c.L_RATE, name='optimizer')
+        self.train_op = self.optimizer.minimize(self.loss,
+                                                global_step=self.global_step,
+                                                name='train_op')
+
 
     def generate(self, num_out=200, prime=None, sample=False):
         """
@@ -164,19 +172,19 @@ class LSTMModel:
         # prime the model state
         for word in prime.split():
             print word
-            input_i = np.array([[self.vocab.index(word)]])
+            last_word_i = self.vocab.index(word)
+            input_i = np.array([[last_word_i]])
 
             feed_dict = {self.inputs: input_i, self.initial_state: state}
             state = self.sess.run(self.final_state, feed_dict=feed_dict)
 
         # generate the sequence
         gen_seq = prime
-        word = prime.split()[-1]
         for i in xrange(num_out):
             # generate word probabilities
-            input_i = np.array([[self.vocab[word]]])
+            input_i = np.array([[last_word_i]]) #TODO: use dictionary?
             feed_dict = {self.inputs: input_i, self.initial_state: state}
-            probs, state = self.sess.run(self.final_state, feed_dict=feed_dict)
+            probs, state = self.sess.run([self.probs, self.final_state], feed_dict=feed_dict)
             probs = probs[0]
 
             # select index of new word
@@ -188,6 +196,6 @@ class LSTMModel:
             # append new word to the generated sequence
             gen_word = self.vocab[gen_word_i]
             gen_seq += ' ' + gen_word
-            word = gen_word
+            last_word_i = gen_word_i
 
         return gen_seq

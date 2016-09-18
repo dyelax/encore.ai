@@ -1,37 +1,41 @@
 import tensorflow as tf
+from os.path import join
+import getopt
+import sys
 
 import constants as c
 from LSTMModel import LSTMModel
-from utils import save_sample
 from data_reader import DataReader
 
 
 class LyricGenRunner:
-    def __init__(self, model_load_path, artist_name):
+    def __init__(self, model_load_path, artist_name, test):
         """
         Initializes the Lyric Generation Runner.
 
         @param model_load_path: The path from which to load a previously-saved model.
                                 Default = None.
-        @param artist_dir: The directory with artist lyrics on which to train.
+        @param artist_name: The name of the artist on which to train.
         """
 
         self.sess = tf.Session()
+        self.artist_name = artist_name
 
         ##
         # Data
         ##
         print 'Process data...'
-        self.data_reader = DataReader(artist_name)
+        self.data_reader = DataReader(self.artist_name)
         self.vocab = self.data_reader.get_vocab()
 
         print 'Init model...'
         self.model = LSTMModel(self.sess,
                                self.vocab,
-                               32,
-                               20,
-                               1024,
-                               2)
+                               c.BATCH_SIZE,
+                               c.SEQ_LEN,
+                               c.CELL_SIZE,
+                               c.NUM_LAYERS,
+                               test=test)
 
         print 'Init variables...'
         self.saver = tf.train.Saver()
@@ -41,6 +45,12 @@ class LyricGenRunner:
         if model_load_path is not None:
             self.saver.restore(self.sess, model_load_path)
             print 'Model restored from ' + model_load_path
+
+
+        if test:
+            self.test()
+        else:
+            self.train()
 
     def train(self):
         """
@@ -53,26 +63,47 @@ class LyricGenRunner:
             feed_dict = {self.model.inputs: inputs, self.model.targets: targets}
             global_step, loss, _ = self.sess.run([self.model.global_step,
                                                   self.model.loss,
-                                                  self.model.optimizer],
+                                                  self.model.train_op],
                                                  feed_dict=feed_dict)
 
-            if global_step % c.SAMPLE_SAVE_FREQ == 0:
-                # generate and save sample sequence
-                sample = self.model.generate()
-                save_sample(sample, global_step)
+            print 'Step: %d | loss: %d' % (global_step, loss)
             if global_step % c.MODEL_SAVE_FREQ == 0:
-                self.saver.save(self.sess, c.MODEL_SAVE_DIR, global_step=global_step)
+                print 'Saving model...'
+                self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model'), global_step=global_step)
+
+    def test(self):
+        # generate and save sample sequence
+        sample = self.model.generate()
+
+        print sample
+
+        path = join(c.SAMPLE_SAVE_DIR, self.artist_name + '.txt')
+        with open(path, 'w') as f:
+            f.write(sample)
 
 def main():
     load_path = None
     artist_name = 'kanye_west'
-    test_only = False
+    test = False
 
-    # try:
-        # opts, _ = getopt.getopt(sys.argv[1:], 'l:n:T', ['load_path=', 'name=', 'testOnly']
+    try:
+        opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:t', ['load_path=', 'model_name=',
+                                                          'artist_name=', 'test'])
+    except getopt.GetoptError:
+        sys.exit(2)
 
-    runner = LyricGenRunner(load_path, artist_name)
-    runner.train()
+    for opt, arg in opts:
+        if opt in ('-l', '--load_path'):
+            load_path = arg
+        if opt in ('-m', '--model_name'):
+            c.SAVE_NAME = arg
+        if opt in ('-a', '--artist_name'):
+            artist_name = arg
+        if opt in ('-t', '--test'):
+            test = True
+
+    runner = LyricGenRunner(load_path, artist_name, test)
+
 
 if __name__ == '__main__':
     main()

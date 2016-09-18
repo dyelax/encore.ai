@@ -24,11 +24,11 @@ def get_dir(directory):
 
 
 
-CELL_SIZE = 1024
-NUM_LAYERS = 4
+CELL_SIZE = 256
+NUM_LAYERS = 2
 
 BATCH_SIZE = 50
-SEQ_LEN = 5
+SEQ_LEN = 20
 
 MODEL_SAVE_FREQ =  1000
 

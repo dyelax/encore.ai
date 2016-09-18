@@ -66,10 +66,10 @@ class LyricGenRunner:
                                                   self.model.train_op],
                                                  feed_dict=feed_dict)
 
-            print 'Step: %d | loss: %d' % (global_step, loss)
+            print 'Step: %d | loss: %f' % (global_step, loss)
             if global_step % c.MODEL_SAVE_FREQ == 0:
                 print 'Saving model...'
-                self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model'), global_step=global_step)
+                self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model.ckpt'), global_step=global_step)
 
     def test(self):
         # generate and save sample sequence

@@ -9,7 +9,7 @@ from data_reader import DataReader
 
 
 class LyricGenRunner:
-    def __init__(self, model_load_path, artist_name, test):
+    def __init__(self, model_load_path, artist_name, test, prime_text):
         """
         Initializes the Lyric Generation Runner.
 
@@ -48,7 +48,7 @@ class LyricGenRunner:
 
 
         if test:
-            self.test()
+            self.test(prime_text)
         else:
             self.train()
 
@@ -71,9 +71,9 @@ class LyricGenRunner:
                 print 'Saving model...'
                 self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model.ckpt'), global_step=global_step)
 
-    def test(self):
+    def test(self, prime_text):
         # generate and save sample sequence
-        sample = self.model.generate()
+        sample = self.model.generate(prime=prime_text)
 
         print sample
 
@@ -85,10 +85,11 @@ def main():
     load_path = None
     artist_name = 'kanye_west'
     test = False
+    prime_text = None
 
     try:
-        opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:t', ['load_path=', 'model_name=',
-                                                          'artist_name=', 'test'])
+        opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:p:t', ['load_path=', 'model_name=',
+                                                          'artist_name=', 'prime=', 'test'])
     except getopt.GetoptError:
         sys.exit(2)
 
@@ -99,10 +100,12 @@ def main():
             c.set_save_name(arg)
         if opt in ('-a', '--artist_name'):
             artist_name = arg
+        if opt in ('-p', '--prime'):
+            prime_text = arg
         if opt in ('-t', '--test'):
             test = True
 
-    LyricGenRunner(load_path, artist_name, test)
+    LyricGenRunner(load_path, artist_name, test, prime_text)
 
 
 if __name__ == '__main__':

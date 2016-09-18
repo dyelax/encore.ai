@@ -1,14 +1,17 @@
 import numpy as np
 import os
 from collections import Counter
+import random
 
 class DataReader:
   def __init__(self, artist_name):
     self.artist = artist_name
     self.lyrics = []
+    self.lyric_indices = []
+    self.vocab_lookup = {}
 
   def get_path(self):
-    return '../data/artists/' + self.artist + '/'
+    return '../data_wrangling/artists/' + self.artist + '/'
 
   # Load all song lyrics into a 2D array
   def load_lyrics(self):
@@ -28,15 +31,29 @@ class DataReader:
     all_words = reduce(lambda a,b: a + b, self.lyrics)
 
     tokens = set(all_words)
+    self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
+    self.lyric_indices = [map(lambda x: self.vocab_lookup[x], x) for x in self.lyrics]
+
     return np.array(tokens)
 
 
-  def get_train_batch(batch_size, seq_size):
-    inputs
-    targets
-    pass
+  def get_train_batch(self, batch_size, seq_len):
+    inputs = np.empty([batch_size, seq_len], dtype=int)
+    targets = np.empty([batch_size, seq_len], dtype=int)
+
+    for i in xrange(batch_size):
+      inp, target = self.get_batch(seq_len)
+      inputs[i] = inp
+      targets[i] = target
+
     return (inputs, targets)
 
+  def get_batch(self, seq_len):
+    # Pick a random song
+    song = random.choice(self.lyric_indices)
 
-dr = DataReader('kanye_west')
-dr.get_vocab()
+    # Take a sequence of (seq_len) from the song lyrics
+    i = random.randint(0, len(song) - (seq_len + 1))
+    inp= np.array(song[i:i+seq_len], dtype=int)
+    target =  np.array(song[i+1:i+seq_len+1], dtype=int)
+    return inp, target

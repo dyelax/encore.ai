@@ -1,9 +1,5 @@
 import numpy as np
 import os
-<<<<<<< HEAD
-=======
-from collections import Counter
->>>>>>> 6a2a55a5424ba1108a909d9c2346bf93243dc746
 import random
 
 class DataReader:

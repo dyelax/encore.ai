@@ -25,6 +25,18 @@ L_RATE = 0.002
 
 # Data
 
+def set_save_name(name):
+    """
+    Edits all constants dependent on SAVE_NAME.
+
+    @param name: The new save name.
+    """
+    global SAVE_NAME, MODEL_SAVE_DIR, SAMPLE_SAVE_DIR
+
+    SAVE_NAME = name
+    MODEL_SAVE_DIR = get_dir(join(SAVE_DIR, 'models/', SAVE_NAME))
+    SAMPLE_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'samples'), SAVE_NAME))
+
 
 SAVE_DIR = get_dir('../save/')
 SAVE_NAME = 'default/'

@@ -88,9 +88,9 @@ def main():
     prime_text = None
 
     try:
-        opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:p:t', ['load_path=', 'model_name=',
-                                                            'artist_name=', 'prime=', 'test',
-                                                            'save_freq='])
+        opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:p:s:t', ['load_path=', 'model_name=',
+                                                            'artist_name=', 'prime=', 'seq_len',
+                                                            'test', 'save_freq='])
     except getopt.GetoptError:
         sys.exit(2)
 
@@ -103,6 +103,8 @@ def main():
             artist_name = arg
         if opt in ('-p', '--prime'):
             prime_text = arg
+        if opt in ('-s', '--seq_len'):
+            c.SEQ_LEN = arg
         if opt in ('-t', '--test'):
             test = True
         if opt == '--save_freq':

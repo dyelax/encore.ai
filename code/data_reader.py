@@ -1,57 +1,93 @@
 import numpy as np
 import os
 import random
+from collections import Counter
 
 class DataReader:
-  def __init__(self, artist_name):
-    self.artist = artist_name
-    self.lyrics = []
-    self.lyric_indices = []
-    self.vocab_lookup = {}
+    def __init__(self, artist_name):
+        self.artist = artist_name
+        self.lyrics = []
+        self.lyric_indices = []
+        self.vocab_lookup = {}
 
-  def get_path(self):
-    return os.path.join('../data/artists/', self.artist)
+    def get_path(self):
+        """
+        @return: The path to the specified artist's lyric data.
+        """
+        return os.path.join('../data/artists/', self.artist)
 
-  # Load all song lyrics into a 2D array
-  def load_lyrics(self):
-    path = self.get_path()
-    for fn in os.listdir(path):
-      with open(os.path.join(path, fn), 'r') as song:
-        self.lyrics.append(song.read().split(' '))
+    # Load all song lyrics into a 2D array
+    def load_lyrics(self):
+        """
+        Read lyrics from file into self.lyrics - a 2D list of dimensions [songs, song_words].
+        """
+        path = self.get_path()
+        for fn in os.listdir(path):
+            with open(os.path.join(path, fn), 'r') as song:
+                self.lyrics.append(song.read().split(' '))
 
-  # An array of unique words (work tokens) with the bottom THRESHOLD_COUNT least frequent words converted to UNK
-  def get_vocab(self):
-    # Load the lyric data if it hasn't been loaded already
-    if len(self.lyrics) == 0:
-      self.load_lyrics()
+    #
+    def get_vocab(self):
+        """
+        @return: An array of unique words (tokens) with the bottom THRESHOLD_COUNT least
+                 frequent words converted to '*UNK*'
+        """
+        # Load the lyric data if it hasn't been loaded already
+        if len(self.lyrics) == 0:
+            self.load_lyrics()
 
-    THRESHOLD_COUNT = 10
-    # Collapses the 2D array to a 1D array of words
-    all_words = reduce(lambda a,b: a + b, self.lyrics)
+        # Collapses the 2D array to a 1D array of words
+        all_words = reduce(lambda a,b: a + b, self.lyrics)
 
-    tokens = set(all_words)
-    self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
-    self.lyric_indices = [map(lambda x: self.vocab_lookup[x], x) for x in self.lyrics]
+        # convert THRESHOLD_COUNT frequent words to '*UNK*'
+        THRESHOLD_COUNT = 10
+        least_referenced = Counter(all_words).most_common()[:-(THRESHOLD_COUNT + 1):-1]
+        self.lyrics = [map(lambda word: '*UNK*' if word in least_referenced else word, song)
+                       for song in self.lyrics]
 
-    return list(tokens)
+        # get a sorted list of unique word tokens
+        tokens = sorted(list(set(all_words)))
 
-  def get_train_batch(self, batch_size, seq_len):
-    inputs = np.empty([batch_size, seq_len], dtype=int)
-    targets = np.empty([batch_size, seq_len], dtype=int)
+        # creates a map from word to index
+        self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
+        # Converts words in self.lyrics to the appropriate indices.
+        self.lyric_indices = [map(lambda word: self.vocab_lookup[word], song)
+                              for song in self.lyrics]
 
-    for i in xrange(batch_size):
-      inp, target = self.get_batch(seq_len)
-      inputs[i] = inp
-      targets[i] = target
+        return tokens
 
-    return (inputs, targets)
+    def get_train_batch(self, batch_size, seq_len):
+        """
+        Gets a batch of sequences for training.
 
-  def get_batch(self, seq_len):
-    # Pick a random song
-    song = random.choice(self.lyric_indices)
+        @param batch_size: The number of sequences in the batch.
+        @param seq_len: The number of words in a sequence.
 
-    # Take a sequence of (seq_len) from the song lyrics
-    i = random.randint(0, len(song) - (seq_len + 1))
-    inp= np.array(song[i:i+seq_len], dtype=int)
-    target =  np.array(song[i+1:i+seq_len+1], dtype=int)
-    return inp, target
+        @return: A tuple of arrays of shape [batch_size, seq_len].
+        """
+        inputs = np.empty([batch_size, seq_len], dtype=int)
+        targets = np.empty([batch_size, seq_len], dtype=int)
+
+        for i in xrange(batch_size):
+            inp, target = self.get_seq(seq_len)
+            inputs[i] = inp
+            targets[i] = target
+
+        return inputs, targets
+
+    def get_seq(self, seq_len):
+        """
+        Gets a single pair of sequences (input, target) from a random song.
+
+        @param seq_len: The number of words in a sequence.
+
+        @return: A tuple of sequences, (input, target) offset from each other by one word.
+        """
+        # Pick a random song
+        song = random.choice(self.lyric_indices)
+
+        # Take a sequence of (seq_len) from the song lyrics
+        i = random.randint(0, len(song) - (seq_len + 1))
+        inp= np.array(song[i:i+seq_len], dtype=int)
+        target =  np.array(song[i+1:i+seq_len+1], dtype=int)
+        return inp, target

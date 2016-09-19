@@ -89,7 +89,8 @@ def main():
 
     try:
         opts, _ = getopt.getopt(sys.argv[1:], 'l:m:a:p:t', ['load_path=', 'model_name=',
-                                                          'artist_name=', 'prime=', 'test'])
+                                                            'artist_name=', 'prime=', 'test',
+                                                            'save_freq='])
     except getopt.GetoptError:
         sys.exit(2)
 
@@ -104,6 +105,8 @@ def main():
             prime_text = arg
         if opt in ('-t', '--test'):
             test = True
+        if opt == '--save_freq':
+            c.MODEL_SAVE_FREQ = int(arg)
 
     LyricGenRunner(load_path, artist_name, test, prime_text)
 

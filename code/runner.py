@@ -19,15 +19,12 @@ class LyricGenRunner:
                             Default = 'kanye_west'
         @param test: Whether to test or train the model. Testing generates a sequence from the
                      provided model and artist. Default = False.
-        @param prime_text:
+        @param prime_text: The text with which to start the test sequence.
         """
 
         self.sess = tf.Session()
         self.artist_name = artist_name
 
-        ##
-        # Data
-        ##
         print 'Process data...'
         self.data_reader = DataReader(self.artist_name)
         self.vocab = self.data_reader.get_vocab()
@@ -76,6 +73,9 @@ class LyricGenRunner:
                 self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model.ckpt'), global_step=global_step)
 
     def test(self, prime_text):
+        """
+        Generates a text sequence.
+        """
         # generate and save sample sequence
         sample = self.model.generate(prime=prime_text)
 

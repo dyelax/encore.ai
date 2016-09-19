@@ -58,3 +58,10 @@ MODEL_SAVE_DIR = get_dir(join(join(SAVE_DIR, 'models'), SAVE_NAME))
 
 # How often to save the model, in # steps.
 MODEL_SAVE_FREQ = 5000
+
+##
+# Misc
+##
+
+# Token for rare words in the vocabulary, used to simulate unknown seed words.
+UNK = '*UNK*'

@@ -3,6 +3,8 @@ import os
 import random
 from collections import Counter
 
+import constants as c
+
 class DataReader:
     def __init__(self, artist_name):
         self.artist = artist_name
@@ -42,8 +44,12 @@ class DataReader:
         # convert THRESHOLD_COUNT frequent words to '*UNK*'
         THRESHOLD_COUNT = 10
         least_referenced = Counter(all_words).most_common()[:-(THRESHOLD_COUNT + 1):-1]
-        self.lyrics = [map(lambda word: '*UNK*' if word in least_referenced else word, song)
+        least_referenced = [tup[0] for tup in least_referenced] # grab word from (word, count) tuple
+        print least_referenced
+
+        self.lyrics = [map(lambda word: c.UNK if word in least_referenced else word, song)
                        for song in self.lyrics]
+        all_words = map(lambda word: c.UNK if word in least_referenced else word, all_words)
 
         # get a sorted list of unique word tokens
         tokens = sorted(list(set(all_words)))

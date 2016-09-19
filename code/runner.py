@@ -81,10 +81,6 @@ class LyricGenRunner:
 
         print sample
 
-        path = join(c.SAMPLE_SAVE_DIR, self.artist_name + '.txt')
-        with open(path, 'w') as f:
-            f.write(sample)
-
 def main():
     load_path = None
     artist_name = 'kanye_west'

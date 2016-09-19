@@ -33,9 +33,7 @@ class DataReader:
     self.vocab_lookup = dict((word, i) for i, word in enumerate(tokens))
     self.lyric_indices = [map(lambda x: self.vocab_lookup[x], x) for x in self.lyrics]
 
-    # np.savez('/home/mjc/Research/encore.ai/indeces.npz',self.lyric_indices)
-    np.savez('/home/mjc/Research/encore.ai/words.npz', np.array(list(tokens)))
-
+    return list(tokens)
 
   def get_train_batch(self, batch_size, seq_len):
     inputs = np.empty([batch_size, seq_len], dtype=int)

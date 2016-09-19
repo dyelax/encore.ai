@@ -26,7 +26,8 @@ class DataReader:
         path = self.get_path()
         for fn in os.listdir(path):
             with open(os.path.join(path, fn), 'r') as song:
-                self.lyrics.append(song.read().split(' '))
+                song_lyrics = self.clean_string(song.read()).split()
+                self.lyrics.append(song_lyrics)
 
     #
     def get_vocab(self):
@@ -45,11 +46,10 @@ class DataReader:
         THRESHOLD_COUNT = 10
         least_referenced = Counter(all_words).most_common()[:-(THRESHOLD_COUNT + 1):-1]
         least_referenced = [tup[0] for tup in least_referenced] # grab word from (word, count) tuple
-        print least_referenced
-
         self.lyrics = [map(lambda word: c.UNK if word in least_referenced else word, song)
                        for song in self.lyrics]
-        all_words = map(lambda word: c.UNK if word in least_referenced else word, all_words)
+        # reset all_words to include UNKs
+        all_words = reduce(lambda a, b: a + b, self.lyrics)
 
         # get a sorted list of unique word tokens
         tokens = sorted(list(set(all_words)))
@@ -97,3 +97,29 @@ class DataReader:
         inp= np.array(song[i:i+seq_len], dtype=int)
         target =  np.array(song[i+1:i+seq_len+1], dtype=int)
         return inp, target
+
+    def clean_string(self, string):
+        """
+        Cleans unwanted characters and words from string.
+
+        @param string: The string to be cleaned.
+
+        @return: The cleaned string.
+        """
+        string = string.lower()  # lowercase
+
+        clean_words = []
+        for word in string.split():
+            # clean words with quotation marks on only one side
+            if word[0] == '"' and word[-1] != '"':
+                clean_words.append(word[1:])
+            elif word[-1] == '"' and word[0] != '"':
+                clean_words.append(word[:-1])
+
+            # clean words with parenthases on only one side
+            if word[0] == '(' and word[-1] != ')':
+                clean_words.append(word[1:])
+            elif word[-1] == ')' and word[0] != '(':
+                clean_words.append(word[:-1])
+
+        return ' '.join(clean_words)

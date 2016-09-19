@@ -29,7 +29,6 @@ class DataReader:
                 song_lyrics = self.clean_string(song.read()).split()
                 self.lyrics.append(song_lyrics)
 
-    #
     def get_vocab(self):
         """
         @return: An array of unique words (tokens) with the bottom THRESHOLD_COUNT least
@@ -114,14 +113,16 @@ class DataReader:
         for word in string.split():
             # clean words with quotation marks on only one side
             if word[0] == '"' and word[-1] != '"':
-                clean_words.append(word[1:])
+                word = word[1:]
             elif word[-1] == '"' and word[0] != '"':
-                clean_words.append(word[:-1])
+                word = word[-1]
 
             # clean words with parenthases on only one side
             if word[0] == '(' and word[-1] != ')':
-                clean_words.append(word[1:])
+                word = word[1:]
             elif word[-1] == ')' and word[0] != '(':
-                clean_words.append(word[:-1])
+                word = word[:-1]
+
+            clean_words.append(word)
 
         return ' '.join(clean_words)

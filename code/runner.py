@@ -15,7 +15,11 @@ class LyricGenRunner:
 
         @param model_load_path: The path from which to load a previously-saved model.
                                 Default = None.
-        @param artist_name: The name of the artist on which to train.
+        @param artist_name: The name of the artist on which to train. (Used to grab data).
+                            Default = 'kanye_west'
+        @param test: Whether to test or train the model. Testing generates a sequence from the
+                     provided model and artist. Default = False.
+        @param prime_text:
         """
 
         self.sess = tf.Session()

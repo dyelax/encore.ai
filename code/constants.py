@@ -36,6 +36,7 @@ def get_dir(directory):
     if not exists(directory):
         makedirs(directory)
     return directory
+
 def set_save_name(name):
     """
     Edits all constants dependent on SAVE_NAME.

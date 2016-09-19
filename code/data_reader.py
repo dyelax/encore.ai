@@ -89,8 +89,10 @@ class DataReader:
 
         @return: A tuple of sequences, (input, target) offset from each other by one word.
         """
-        # Pick a random song
-        song = random.choice(self.lyric_indices)
+        # Pick a random song. Must be longer than seq_len
+        for i in xrange(1000):  # cap at 1000 tries
+            song = random.choice(self.lyric_indices)
+            if len(song) > seq_len: break
 
         # Take a sequence of (seq_len) from the song lyrics
         i = random.randint(0, len(song) - (seq_len + 1))

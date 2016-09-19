@@ -20,6 +20,7 @@ class LSTMModel:
         @param cell_size: The size of the hidden layers in the LSTM cells.
                           (also the size of the word embeddings.)
         @param num_layers: The number of LSTM layers in the network.
+        @param test: Whether to test or train the model. Default = False.
         """
         self.sess = sess
 
@@ -62,7 +63,7 @@ class LSTMModel:
         with tf.variable_scope('lstm_vars'):
             self.ws = tf.get_variable('ws', [self.cell_size, self.vocab_size])
             self.bs = tf.get_variable('bs', [self.vocab_size])  # TODO: initializer?
-            with tf.device('/cpu:0'):  # TODO: Why force this on the CPU?
+            with tf.device('/cpu:0'):
                 self.embeddings = tf.get_variable('embeddings', [self.vocab_size, self.cell_size])
 
                 # get embeddings for all input words

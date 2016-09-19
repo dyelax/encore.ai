@@ -70,7 +70,8 @@ class LyricGenRunner:
             print 'Step: %d | loss: %f' % (global_step, loss)
             if global_step % c.MODEL_SAVE_FREQ == 0:
                 print 'Saving model...'
-                self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, 'model.ckpt'), global_step=global_step)
+                self.saver.save(self.sess, join(c.MODEL_SAVE_DIR, self.artist_name + '.ckpt'),
+                                global_step=global_step)
 
     def test(self, prime_text):
         """

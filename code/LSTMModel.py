@@ -151,7 +151,7 @@ class LSTMModel:
                                                 name='train_op')
 
 
-    def generate(self, num_out=200, prime=None, sample=True):
+    def generate(self, num_out=200, prime=None, sample=False):
         """
         Generate a sequence of text from the trained model.
 

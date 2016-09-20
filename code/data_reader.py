@@ -112,24 +112,23 @@ class DataReader:
 
         @return: The cleaned string.
         """
-        # string = string.lower()  # lowercase
-        #
-        # clean_words = []
-        # for word in string.split():
-        #     # clean words with quotation marks on only one side
-        #     if word[0] == '"' and word[-1] != '"':
-        #         word = word[1:]
-        #     elif word[-1] == '"' and word[0] != '"':
-        #         word = word[-1]
-        #
-        #     # clean words with parenthases on only one side
-        #     if word[0] == '(' and word[-1] != ')':
-        #         word = word[1:]
-        #     elif word[-1] == ')' and word[0] != '(':
-        #         word = word[:-1]
-        #
-        #     clean_words.append(word)
-        #
-        # return ' '.join(clean_words)
+        string = string.lower()  # lowercase
 
-        return string
+        clean_words = []
+        for word in string.split():
+            # clean words with quotation marks on only one side
+            if word[0] == '"' and word[-1] != '"':
+                word = word[1:]
+            elif word[-1] == '"' and word[0] != '"':
+                word = word[-1]
+
+            # clean words with parenthases on only one side
+            if word[0] == '(' and word[-1] != ')':
+                word = word[1:]
+            elif word[-1] == ')' and word[0] != '(':
+                word = word[:-1]
+
+            clean_words.append(word)
+
+        return ' '.join(clean_words)
+

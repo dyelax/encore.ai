@@ -41,12 +41,12 @@ class DataReader:
         # Collapses the 2D array to a 1D array of words
         all_words = reduce(lambda a,b: a + b, self.lyrics)
 
+        # TODO: Find out why this UNK code causes differences between Linux and OS X vocabulary
         # # convert THRESHOLD_COUNT frequent words to '*UNK*'
         # THRESHOLD_COUNT = 10
         # least_referenced = Counter(all_words).most_common()[:-(THRESHOLD_COUNT + 1):-1]
         # least_referenced = [tup[0] for tup in least_referenced] # grab word from (word, count) tuple
         # print least_referenced
-        #
         #
         # self.lyrics = [map(lambda word: c.UNK if word in least_referenced else word, song)
         #                for song in self.lyrics]

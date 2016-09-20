@@ -1,6 +1,9 @@
 #Encore.ai
 Generate new lyrics in the style of any artist using Deep Learning.
 
+<img src="https://github.com/dyelax/encore.ai/blob/development/assets/devpost_img_2-01.png" style="width: 100%"/>
+
+
 ##Music Lives Forever.
 From Elvis to The Beatles, Nirvana to Tupac, many of the artists we love are no longer creating. Encore.ai lets you revive the spirit of your favorite artists in the modern age.
 

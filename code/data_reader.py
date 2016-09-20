@@ -62,6 +62,8 @@ class DataReader:
         self.lyric_indices = [map(lambda word: self.vocab_lookup[word], song)
                               for song in self.lyrics]
 
+        print len(tokens)
+
         return tokens
 
     def get_train_batch(self, batch_size, seq_len):
@@ -110,22 +112,24 @@ class DataReader:
 
         @return: The cleaned string.
         """
-        string = string.lower()  # lowercase
+        # string = string.lower()  # lowercase
+        #
+        # clean_words = []
+        # for word in string.split():
+        #     # clean words with quotation marks on only one side
+        #     if word[0] == '"' and word[-1] != '"':
+        #         word = word[1:]
+        #     elif word[-1] == '"' and word[0] != '"':
+        #         word = word[-1]
+        #
+        #     # clean words with parenthases on only one side
+        #     if word[0] == '(' and word[-1] != ')':
+        #         word = word[1:]
+        #     elif word[-1] == ')' and word[0] != '(':
+        #         word = word[:-1]
+        #
+        #     clean_words.append(word)
+        #
+        # return ' '.join(clean_words)
 
-        clean_words = []
-        for word in string.split():
-            # clean words with quotation marks on only one side
-            if word[0] == '"' and word[-1] != '"':
-                word = word[1:]
-            elif word[-1] == '"' and word[0] != '"':
-                word = word[-1]
-
-            # clean words with parenthases on only one side
-            if word[0] == '(' and word[-1] != ')':
-                word = word[1:]
-            elif word[-1] == ')' and word[0] != '(':
-                word = word[:-1]
-
-            clean_words.append(word)
-
-        return ' '.join(clean_words)
+        return string

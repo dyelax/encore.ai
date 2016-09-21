@@ -89,3 +89,14 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Lyric Data
+artists/
+artist_data/
+hand_picked.txt
+unified_artists.txt
+completed_artists.txt
+
+# Node JS
+node_modules/
+

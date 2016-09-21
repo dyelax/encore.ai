@@ -5,7 +5,7 @@ Generate new lyrics in the style of any artist using Deep Learning.
 
 
 ##Music Lives Forever.
-From Elvis to The Beatles, Nirvana to Tupac, many of the artists we love are no longer creating. encore.ai lets you revive the spirit of your favorite artists in the modern age.
+From Elvis to The Beatles, Nirvana to Tupac, many of the musicians we love are no longer creating. encore.ai lets you revive the spirit of your favorite artists in the modern age.
 
 ##We are impatient.
 Cant wait for the next Kanye album to drop? Were you part of the public outcry over the delayed release of Frank Ocean's new record? Fret no more – encore.ai delivers your favorite artist's next single at the touch of a button.

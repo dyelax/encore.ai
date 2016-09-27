@@ -2,6 +2,8 @@
 Generate new lyrics in the style of any artist using Deep Learning. <br/>
 Winner of "Best Machine Learning Hack" at HackMIT!
 
+Check it out at http://encore.ai.
+
 <img src="https://github.com/dyelax/encore.ai/blob/development/assets/devpost_img_2-01.png" style="width: 100%"/>
 
 
@@ -75,9 +77,21 @@ The one we danced to all night long <br />
 Cause you got me a nice new apartment <br />
 In a city, wouldn't you have to make me go back there again." <br />
 
-find the wrong wrong <br />
+Find the wrong wrong <br />
 On our last night <br />
 Ooh, ooh, love's like this <br />
 It's something I missed <br />
 Ooh, ooh, ooh, ooh <br />
 It was the best night, never would forget how he moved.
+
+##  Instructions to Train:
+
+If you want to use our model to train your own artists, follow these steps:
+
+1. Pick an artist – it should be someone with a lot of lyrics. (Over 100,000 words).
+2. Collect all of the artist's lyrics from your favorite lyrics website. Save each song as a text file in `data/artist_name/`. We recommend leaving newlines in as a special token so that the network will learn line and stanza breaks.
+3. Train by navigating to the `code` directory and running  `python runner.py -a <artist_name> -m <model_save_name>`.
+  - Our models were all trained for 30,000 steps.
+4. Generate new songs by  running  <br />`python runner.py -a <artist_name> -l ../save/models/<model_save_name>/<ckpt_file> -t`.
+  - Optional: If you would like to specify "prime text"  – the initial text that the model will generate from – pass in a string with the `-p` flag.
+5. Share your trained models with us so we can feature them on our website! Create an issue with a link to a public Dropbox or Google Drive containing your model's .ckpt file.

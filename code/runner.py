@@ -40,7 +40,7 @@ class LyricGenRunner:
 
         print 'Init variables...'
         self.saver = tf.train.Saver(max_to_keep=None)
-        self.sess.run(tf.initialize_all_variables())
+        self.sess.run(tf.global_variables_initializer())
 
         # if load path specified, load a saved model
         if model_load_path is not None:

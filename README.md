@@ -1,4 +1,4 @@
-#encore.ai
+# encore.ai
 Generate new lyrics in the style of any artist using Deep Learning. <br/>
 Winner of "Best Machine Learning Hack" at HackMIT!
 
@@ -7,18 +7,18 @@ Check it out at http://encore.ai.
 <img src="https://github.com/dyelax/encore.ai/blob/development/assets/devpost_img_2-01.png" style="width: 100%"/>
 
 
-##Music Lives Forever.
+## Music Lives Forever.
 From Elvis to The Beatles, Nirvana to Tupac, many of the musicians we love are no longer creating. encore.ai lets you revive the spirit of your favorite artists in the modern age.
 
-##We are impatient.
+## We are impatient.
 Cant wait for the next Kanye album to drop? Were you part of the public outcry over the delayed release of Frank Ocean's new record? Fret no more – encore.ai delivers your favorite artist's next single at the touch of a button.
 
-##But How Does It Work?!
+## But How Does It Work?!
 We used TensorFlow to create an LSTM (Long Short Term Memory) Neural Network that reads all of the lyrics of any musical artist. The network learns the style of how the artist writes – the context of words, rhymes, line/stanza breaks, etc. Given a seed word or phrase, it will generate a new song in that artist's style.
 
-##Some Examples:
+## Some Examples:
 
-###Kanye West
+### Kanye West
 
 Never I admit I can't do I see a drug som... <br />
 I’m ’bout to re-united <br />
@@ -51,7 +51,7 @@ Let's fly off beats that I’m at these good life with you <br />
 keep the big ass, take my things and throw my shit’s is stronger<br />
 
 
-###Taylor Swift
+### Taylor Swift
 
 paper lying here <br />
 'Cause I swear out there ain't where <br />
